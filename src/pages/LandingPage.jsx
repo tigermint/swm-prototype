@@ -1,8 +1,6 @@
+import { styled } from 'styled-components';
+
 const LandingPage = () => {
-  return (
-    <>
-      <div>landingPage</div>
-    </>
-  );
+  return <></>;
 };
 export default LandingPage;
