@@ -19,4 +19,37 @@ export const GlobalStyles = createGlobalStyle`
   :root {
     font-family: "GangwonEdu_OTFBoldA";
   }
+
+  body {
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Nanum Pen Script', cursive;
+  min-height: 100vh;
+  margin: 0;
+  }
+
+  @media (min-width: 425px) {
+    .App {
+    width: 425px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    .App {
+      width: 90vw;
+    }
+  }
+
+  #root {
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  .App {
+    min-height: 100vh;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
