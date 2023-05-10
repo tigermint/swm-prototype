@@ -2,34 +2,59 @@ import {useEffect, useState} from "react";
 import {supabase} from "../utils/supabaseClient";
 
 const WelcomePage = () => {
-    const [data, setData] = useState(null);
+    const [userInform, setUserInform] = useState(null);
 
-    const dbGetUserByMyUuid = async () => {
+    // get uuid from supabase.auth
+    useEffect(() => {
+        const dbGetAuth = async () => {
+            const {data: {user}, error} = await supabase.auth.getUser()
+
+            // 결과 확인
+            if (error) {
+                console.error(error);
+            } else {
+                setUserInform(user?.id);
+            }
+        }
+        dbGetAuth();
+    }, []);
+
+    // create new user
+    const dbPutUser = async (name) => {
+        const {data, error} = await supabase
+            .from('user')
+            .insert([
+                {uuid: userInform, name: name},
+            ])
+    }
+
+    // get or create user
+    const dbGetUserOrCreate = async () => {
+        //await dbGetAuth();
+
         const {data, error} = await supabase
             .from('user')
             .select()
+            .eq('uuid', userInform)
 
         // 결과 확인
         if (error) {
             console.error(error);
+            if (error.code === 'PGRST116') {  // 검색된 기록이 없을때
+                console.log("가입되지않은 사용자입니다.");
+                await dbPutUser("배고파");
+            }
         } else {
-            console.log(data);
-            console.log(supabase);
-            // setData(data);
+            console.log(data[0]);
+            if (data[0] === undefined) {
+                console.log("가입되지않은 사용자입니다.");
+                await dbPutUser("홈길동");
+            }
         }
     }
-    dbGetUserByMyUuid();
+    dbGetUserOrCreate();
 
-    const dbGetUserByMyUuid2 = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        console.log("UserMetadata: " + JSON.stringify(user.user_metadata));
-        console.log(user?.id)
-    }
-    dbGetUserByMyUuid2();
-
-    // case1(#1): registered user
-    // case2(#1-1): new user
-    // next case(#1-2): all
+    // rend
     return (
         <div>
             <h1>MywwwPage</h1>
