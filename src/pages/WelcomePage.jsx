@@ -2,11 +2,12 @@ import {useEffect, useState} from "react";
 import {supabase} from "../utils/supabaseClient";
 
 const WelcomePage = () => {
-    const dbGetUserByMyUuid = async() => {
-        const { data, error } = await supabase
+    const [data, setData] = useState(null);
+
+    const dbGetUserByMyUuid = async () => {
+        const {data, error} = await supabase
             .from('user')
             .select()
-            //.eq('uuid', user.email)
 
         // 결과 확인
         if (error) {
@@ -14,9 +15,17 @@ const WelcomePage = () => {
         } else {
             console.log(data);
             console.log(supabase);
+            // setData(data);
         }
     }
     dbGetUserByMyUuid();
+
+    const dbGetUserByMyUuid2 = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        console.log("UserMetadata: " + JSON.stringify(user.user_metadata));
+        console.log(user?.id)
+    }
+    dbGetUserByMyUuid2();
 
     // case1(#1): registered user
     // case2(#1-1): new user
@@ -24,6 +33,10 @@ const WelcomePage = () => {
     return (
         <div>
             <h1>MywwwPage</h1>
+            <span>
+                supabase:
+                <input id="aaa" type="text" value={JSON.stringify(supabase)}/>
+            </span>
         </div>
     );
 };
