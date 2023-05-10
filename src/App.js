@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import SpacePage from './pages/SpacePage';
 import MyPage from './pages/MyPage';
 import ErrorPage from './pages/ErrorPage';
+import WelcomePage from './pages/WelcomePage';
 import TestPage from './pages/TestPage';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/space" element={<SpacePage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
