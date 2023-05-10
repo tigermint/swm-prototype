@@ -1,8 +1,8 @@
 import {Input} from '@mantine/core';
-import { supabase } from "../utils/supabaseClient";
+import {supabase} from "../utils/supabaseClient";
 
 const TestPage = () => {
-    const handleLogin = async() => {
+    const handleLogin = async () => {
         const {data, error} = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {

@@ -9,13 +9,11 @@ import {supabase} from "../utils/supabaseClient";
  */
 function dbPutUser(uuid, name) {
     return async () => {
-        console.log("1111111111112");
         const {data, error} = await supabase
             .from('user')
             .insert([
                 {uuid: uuid, name: name},
             ])
-        console.log("111111111111");
 
         // 결과 확인
         if (error) {
