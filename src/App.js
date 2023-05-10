@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/space" element={<SpacePage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/me" element={<MyPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

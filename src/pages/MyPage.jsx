@@ -1,8 +1,10 @@
+import MainLayout from "../components/MainLayout"
+
 const MyPage = () => {
   return (
-    <div>
+    <MainLayout>
       <h1>MyPage</h1>
-    </div>
+    </MainLayout>
   );
 };
 export default MyPage;

@@ -4,7 +4,7 @@ import reset from 'styled-reset';
 // 기본 여백 삭제, 폰트
 export const GlobalStyles = createGlobalStyle`
   ${reset}
-  @font-face {
+  /* @font-face {
     font-family: 'GangwonEdu_OTFBoldA';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
     font-weight: normal;
@@ -18,14 +18,13 @@ export const GlobalStyles = createGlobalStyle`
   }
   :root {
     font-family: "GangwonEdu_OTFBoldA";
-  }
+  } */
 
   body {
   background-color: #f6f6f6;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Nanum Pen Script', cursive;
   min-height: 100vh;
   margin: 0;
   }
@@ -49,7 +48,6 @@ export const GlobalStyles = createGlobalStyle`
 
   .App {
     min-height: 100vh;
-    padding-left: 20px;
-    padding-right: 20px;
+
   }
 `;
