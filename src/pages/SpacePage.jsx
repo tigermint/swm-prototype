@@ -1,8 +1,11 @@
+import MainLayout from '../components/MainLayout';
+
+
 const SpacePage = () => {
   return (
-    <div>
+    <MainLayout>
       <h1>SpacePage</h1>
-    </div>
+    </MainLayout>
   );
 };
 export default SpacePage;

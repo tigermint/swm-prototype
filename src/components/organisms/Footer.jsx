@@ -35,7 +35,7 @@ const Footer = () => {
                     navigate("/space");
                 }} />
                 <NavButton icon={<FontAwesomeIcon icon={faBook} size="xl" />} text={"예약내역"} onClick={() => {
-                    navigate("/mypage");
+                    navigate("/me");
                 }} />
                 <NavButton icon={<FontAwesomeIcon icon={faRightFromBracket} size="xl" />} text={"로그아웃"} onClick={() => {
                     navigate("/");
