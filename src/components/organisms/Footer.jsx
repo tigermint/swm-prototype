@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBuilding, faCalendar, faShareFromSquare } from '@fortawesome/free-regular-svg-icons'
 import { useState, useEffect } from "react";
-import { memo } from "react";
 
 //component
 import NavButton from '../atoms/NavButton';
