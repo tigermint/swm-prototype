@@ -4,8 +4,8 @@ import { Center, Input, Flex, Text, Button, Container } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { IconMoodCheck } from '@tabler/icons-react';
 //component
-import { useEffect } from 'react';
-import {getAuth, getMyUserInform} from "../../apis/supabaseAuth";
+import {useEffect, useState} from 'react';
+import {getAuth, getMyUserInform, signUp} from "../../apis/supabaseAuth";
 import {existsUserJoinedOrganization} from "../../apis/supabaseOrganization";
 
 
@@ -19,6 +19,10 @@ const Wrapper = styled.div`
 
 
 const NamePage = () => {
+    //hooks
+    const navigate = useNavigate();
+    const [name, setName] = useState("");
+
     // 이미 가입한 유저라면 이름 입력 및 회원등록 페이지를 건너뛴다.
     useEffect(() => {
         getMyUserInform().then(async (user) => {
@@ -33,12 +37,16 @@ const NamePage = () => {
         })
     }, []);
 
-    //hooks
-    const navigate = useNavigate();
-
     //custom method
     const onClick = () => {
-        navigate("/organization");
+        getAuth().then(async (uuid) => {
+            await signUp(uuid, name);
+            navigate("/organization");
+        })
+    }
+
+    const handleName = (event) => {
+        setName(event.target.value);
     }
 
     return (
@@ -65,6 +73,7 @@ const NamePage = () => {
                         radius="lg"
                         variant='default'
                         size="lg"
+                        onChange={handleName}
                     />
                     <Button
                         style={{ width: "100%", height: "3.125rem" }}
