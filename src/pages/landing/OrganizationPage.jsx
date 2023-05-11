@@ -3,6 +3,14 @@ import Header from '../../components/organisms/Header';
 import { Center, Input, Flex, Text, Button, Container } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+//apis
+import {
+    createOrganization,
+    existsOrganizationByName,
+    findOrganizationByName,
+    joinToOrganization
+} from "../../apis/supabaseOrganization";
+import {getMyUserInform} from "../../apis/supabaseAuth";
 
 
 const Wrapper = styled.div`
@@ -25,20 +33,42 @@ const OrganizationPage = () => {
     //custom method
     const onClick = () => {
         console.log("click");
-        navigate("/space");
+
+        existsOrganizationByName(organization).then(async (exists) => {
+            const user = await getMyUserInform();
+            let role = 'user';
+
+            if (!exists) {
+                await createOrganization(user['user_id'], organization);
+                role = 'creator';
+            }
+
+            findOrganizationByName(organization).then(async (organization_inform) => {
+                await joinToOrganization(user['user_id'], organization_inform['organization_id'], role);
+                navigate("/space");
+            });
+        })
     }
 
-    const handleSearch = () => {
+    const handleSearch = (event) => {
         //TODO: 조직 검색 Input에 입력된 값 onChange로 받아와서 state에 저장
-
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
-    const handleCreate = () => {
+    const handleCreate = (event) => {
         //TODO: 조직 생성 Input에 입력된 값 onChange로 받아와서 state에 저장
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
     const handleIsFound = () => {
         //TODO: 조직이 존재하는지 확인하는 로직
+        existsOrganizationByName(organization).then((exists) => {
+            setIsFound(exists);
+        });
     }
 
     return (

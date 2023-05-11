@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { IconMoodCheck } from '@tabler/icons-react';
 //component
 import { useEffect } from 'react';
+import {getAuth, getMyUserInform} from "../../apis/supabaseAuth";
+import {existsUserJoinedOrganization} from "../../apis/supabaseOrganization";
 
 
 const Wrapper = styled.div`
@@ -17,13 +19,26 @@ const Wrapper = styled.div`
 
 
 const NamePage = () => {
+    // 이미 가입한 유저라면 이름 입력 및 회원등록 페이지를 건너뛴다.
+    useEffect(() => {
+        getMyUserInform().then(async (user) => {
+            if (user !== undefined) {
+                const joinedUser = await existsUserJoinedOrganization(user['user_id']);
+                if (joinedUser) {
+                    navigate("/space");
+                } else {
+                    navigate("/organization");
+                }
+            }
+        })
+    }, []);
 
     //hooks
     const navigate = useNavigate();
 
     //custom method
     const onClick = () => {
-        navigate("/organizaiton");
+        navigate("/organization");
     }
 
     return (
