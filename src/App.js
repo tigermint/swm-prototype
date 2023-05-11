@@ -2,14 +2,15 @@ import { Routes, Route } from 'react-router-dom';
 
 // Page Import
 import SpacePage from './pages/SpacePage';
+import ReservePage from './pages/ReservePage';
 import LandingPage from './pages/landing/LandingPage';
 import SpaceCreatePage from './pages/SpaceCreatePage';
 import MyPage from './pages/MyPage';
 import NamePage from './pages/landing/NamePage';
 import OrganizationPage from './pages/landing/OrganizationPage';
 import ErrorPage from './pages/ErrorPage';
-import WelcomePage from './pages/WelcomePage';
-import TestPage from './pages/TestPage';
+// import WelcomePage from './pages/WelcomePage';
+// import TestPage from './pages/TestPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/name"  element={<NamePage />} />
         <Route path="/organizaiton"  element={<OrganizationPage />} />
         <Route path="/space" element={<SpacePage />} />
+        <Route path="/space/:id" element={<ReservePage />} />
         <Route path="/create" element={<SpaceCreatePage />} />
         <Route path="/me" element={<MyPage />} />
         {/* <Route path="/test" element={<TestPage />} /> */}
