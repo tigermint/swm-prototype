@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
-import Header from '../components/organisms/Header';
+import Header from '../../components/organisms/Header';
 import { Center, Input, Flex, Text, Button, Container } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { IconMoodCheck } from '@tabler/icons-react';
 import { useState } from 'react';
 
 
@@ -80,7 +79,7 @@ const OrganizationPage = () => {
                                 </div>
                                 :
                                 <div>
-                                    존재하는 조직이 없습니다.
+                                    일치하는 조직이 없습니다.
                                 </div>
                         }
                     >

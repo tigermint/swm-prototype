@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import Header from '../components/organisms/Header';
+import Header from '../../components/organisms/Header';
 import { Center, Input, Flex, Text, Button, Container } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { IconMoodCheck } from '@tabler/icons-react';

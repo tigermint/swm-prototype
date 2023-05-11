@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import Header from '../components/organisms/Header';
+import Header from '../../components/organisms/Header';
 import { Center, Text, Flex } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 //component
-import { GoogleButton } from '../components/atoms/SocialButton/index';
+import { GoogleButton } from '../../components/atoms/SocialButton/index';
 
 
 const Wrapper = styled.div`
