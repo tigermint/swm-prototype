@@ -1,12 +1,23 @@
-import { GoogleButton } from '../components/atoms/SocialButtons/GoogleButton';
-import { Input } from '@mantine/core';
+import {Input} from '@mantine/core';
+import {supabase} from "../utils/supabaseClient";
 
 const TestPage = () => {
-  return (
-    <>
-      <Input />
-      <GoogleButton children="Continue with Google" />
-    </>
-  );
+    const handleLogin = async () => {
+        const {data, error} = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: 'http://localhost:3000/welcome'
+            }
+        })
+    };
+
+    return (
+        <div>
+            <h1>Google Login Test</h1>
+            for SSH Prototype - 2023.05.10
+            <br/>
+            <input type="button" onClick={handleLogin()}>login</input>
+        </div>
+    );
 };
 export default TestPage;
