@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { Button } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     position: sticky;
@@ -29,6 +30,8 @@ const ButtonWrapper = styled.div`
 `
 const Header = () => {
     const [state, setState] = useState(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
         window.location.pathname === "/space" ? setState(true) : setState(false);
     }, [])
@@ -38,7 +41,9 @@ const Header = () => {
                 <Logo>Hello</Logo>
             </div>
             <ButtonWrapper>
-                {state ? <Button variant="light" color="indigo" radius="md" size="xl" compact>공간 추가</Button> : null}
+                {state ? <Button onClick={() => {
+                    navigate("/create")
+                }} variant="light" color="indigo" radius="md" size="xl" compact>공간 추가</Button> : null}
             </ButtonWrapper>
         </Wrapper >
     );
