@@ -4,6 +4,9 @@ import { Center, Text, Flex } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 //component
 import { GoogleButton } from '../../components/atoms/SocialButton/index';
+//apis
+import { GoogleLogin } from "@react-oauth/google";
+import {googleLogin} from "../../apis/supabaseAuth";
 
 
 const Wrapper = styled.div`
@@ -21,7 +24,7 @@ const LandingPage = () => {
   //custom method
   const onClick = () => {
     console.log("click");
-    navigate("/name");
+    googleLogin('http://localhost:3000/name');
   }
   return (
     <>
