@@ -1,8 +1,8 @@
-import { styled } from 'styled-components';
+import {styled} from 'styled-components';
 import Header from '../../components/organisms/Header';
-import { Center, Input, Flex, Text, Button, Container } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
-import { IconMoodCheck } from '@tabler/icons-react';
+import {Center, Input, Flex, Text, Button, Container} from '@mantine/core';
+import {useNavigate} from 'react-router-dom';
+import {IconMoodCheck} from '@tabler/icons-react';
 //component
 import {useEffect, useState} from 'react';
 import {getAuth, getMyUserInform, signUp} from "../../apis/supabaseAuth";
@@ -15,7 +15,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 `
-
 
 
 const NamePage = () => {
@@ -51,8 +50,8 @@ const NamePage = () => {
 
     return (
         <>
-            <Header />
-            <Wrapper >
+            <Header/>
+            <Wrapper>
                 <Flex
                     mih={50}
                     gap="xl"
@@ -61,14 +60,14 @@ const NamePage = () => {
                     direction="column"
                     wrap="wrap"
                 >
-                    <Container style={{ width: "18rem" }}>
+                    <Container style={{width: "18rem"}}>
                         <Center>
-                            <Text size={"1.6em"} weight={"bolder"} >이름(본명)을 입력해주세요!</Text>
+                            <Text size={"1.6em"} weight={"bolder"}>이름(본명)을 입력해주세요!</Text>
                         </Center>
                     </Container>
                     <Input
-                        style={{ width: "100%" }}
-                        icon={<IconMoodCheck />}
+                        style={{width: "100%"}}
+                        icon={<IconMoodCheck/>}
                         placeholder="이름을 입력해주세요"
                         radius="lg"
                         variant='default'
@@ -76,7 +75,7 @@ const NamePage = () => {
                         onChange={handleName}
                     />
                     <Button
-                        style={{ width: "100%", height: "3.125rem" }}
+                        style={{width: "100%", height: "3.125rem"}}
                         onClick={onClick}
                         radius="lg"
                         variant="light"
@@ -86,7 +85,7 @@ const NamePage = () => {
                         완료하기
                     </Button>
                 </Flex>
-            </Wrapper >
+            </Wrapper>
         </>
     );
 };
