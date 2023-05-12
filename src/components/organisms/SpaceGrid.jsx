@@ -1,5 +1,6 @@
-import { createStyles, SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
+import { createStyles, SimpleGrid, Card, Text, Container, Button, Flex } from '@mantine/core';
 import data from '../../assets/mockdata';
+import React from 'react';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -12,43 +13,64 @@ const useStyles = createStyles((theme) => ({
         // },
     },
 
-    title: {
+    name: {
         fontFamily: `Greycliff CF, ${theme.fontFamily}`,
         fontWeight: 600,
+        fontSize: 21,
+        marginBottom: theme.spacing.md,
     },
+    day: {
+        color: theme.colors.gray[6],
+        fontWeight: 600,
+    },
+    time: {
+        color: theme.colors.gray[6],
+        fontWeight: 600,
+    },
+    capacity: {
+        color: theme.colors.gray[6],
+        fontWeight: 600,
+    },
+
 }));
 
 export default function SpaceGrid({ onClick }) {
     const { classes } = useStyles();
 
-    const cards = data.map((article, index) => (
+    const cards = data.map((space, index) => (
         <Card
-            key={article.title}
+            key={space.name}
             p="md"
             radius="md"
             component="a"
-            href={index}
             className={classes.card}
-            onClick={() => {
-                onClick(index);
-            }}>
-            <AspectRatio ratio={1920 / 1080}>
-                <Image src={article.image} />
-            </AspectRatio>
-            <Text color="dimmed" size="xs" transform="uppercase" weight={700} mt="md">
-                {article.date}
+        >
+            <Flex justify={'space-between'}>
+                <Text
+                    className={classes.name}
+                >
+                    {space.name}
+                </Text>
+                <Button onClick={() => { }} variant="light" color="indigo" radius="md" size="md" compact>링크 복사</Button>
+            </Flex>
+            <Text className={classes.day}>
+                이용 가능 요일: {space.day}
             </Text>
-            <Text className={classes.title} mt={5}>
-                {article.title}
+            <Text className={classes.time}>
+                이용 가능 시간: {space.startTime} ~ {space.endTime}
             </Text>
-        </Card>
+            <Text className={classes.capacity}>
+                최대 수용 인원: {space.capacity} 명
+            </Text>
+        </Card >
     ));
 
     return (
         <Container py="xl">
-            <SimpleGrid cols={1} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+            <SimpleGrid cols={1}>
                 {cards}
             </SimpleGrid>
-        </Container>
+        </Container >
     );
 }
+

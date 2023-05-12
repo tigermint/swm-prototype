@@ -28,7 +28,7 @@ export const GlobalStyles = createGlobalStyle`
   min-height: 100vh;
   margin: 0;
   }
-
+  
   @media (min-width: 425px) {
     .App {
     width: 425px;
@@ -48,6 +48,5 @@ export const GlobalStyles = createGlobalStyle`
 
   .App {
     min-height: 100vh;
-
   }
 `;
