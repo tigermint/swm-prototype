@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 //components
 import MainLayout from '../../components/MainLayout';
 import WeekPicker from '../../components/organisms/WeekPicker';
-import { useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {protoCreateSpaceDetail} from "../../apis/supabaseProto";
 
 //styled-components
@@ -25,7 +25,7 @@ const SpaceCreatePage = () => {
     start_time: "",
     end_time: "",
     capacity: "",
-    available_day: [false, false, false, false, false, false, false],  //TODO 요일선택 외 다른값 입력시 요일이 초기화됨
+    available_day: [false, false, false, false, false, false, false],
   });
 
 
@@ -49,6 +49,13 @@ const SpaceCreatePage = () => {
         space.available_day[6]
     ).then(r => navigate("/space"));  // alert 줘야되나?
   }
+
+  const handleWeekChange = useCallback((newWeek) => {
+    setSpace((prevSpace) => ({
+      ...prevSpace,
+      available_day: newWeek,
+    }));
+  }, []);
 
   useEffect(() => {
     console.log(space);
@@ -108,7 +115,9 @@ const SpaceCreatePage = () => {
             label="이용 가능 요일"
             size="md"
           >
-            <WeekPicker week={space.available_day} />
+            {/*<WeekPicker week={space.available_day} />*/}
+            <WeekPicker week={space.available_day} onChange={handleWeekChange} />
+            {/*<WeekPicker onChange={handleWeekChange} />*/}
           </Input.Wrapper>
         </Flex>
         <Button style={{ width: "20rem", marginBottom: "4rem" }} size='lg' radius="md" variant="light"
