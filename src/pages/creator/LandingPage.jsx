@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 //apis
 import {
-    createOrganization,
-    existsOrganizationByName,
-    findOrganizationByName,
-    joinToOrganization
-} from "../../apis/supabaseOrganization";
-import { getMyUserInform } from "../../apis/supabaseAuth";
+    protoCreateOrganization,
+    protoExistsOrganizationByName,
+    protoFindOrganizationByName
+} from "../../apis/supabaseProto";
+import {existsOrganizationByName} from "../../apis/supabaseOrganization";
 
 
 const Wrapper = styled.div`
@@ -29,42 +28,40 @@ const LandingPage = () => {
     const [organization, setOrganization] = useState("");
     const [isFound, setIsFound] = useState(false);
 
-    // //custom method
-    // const onClick = () => {
-    //     console.log("click");
+    //custom method
+    const onClick = async () => {
+        console.log("click");
+        await handleIsFound();
 
-    //     existsOrganizationByName(organization).then(async (exists) => {
-    //         const user = await getMyUserInform();
-    //         let role = 'user';
+        if (isFound) {
+        } else {
+            await protoCreateOrganization(organization);
+        }
 
-    //         if (!exists) {
-    //             await createOrganization(user['user_id'], organization);
-    //             role = 'creator';
-    //         }
-
-    //         findOrganizationByName(organization).then(async (organization_inform) => {
-    //             await joinToOrganization(user['user_id'], organization_inform['organization_id'], role);
-    //             navigate("/space");
-    //         });
-    //     })
-    // }
+        await protoFindOrganizationByName(organization).then((organizationInform) => {
+            console.log(organizationInform);
+            alert(organizationInform);
+            const state = {'organization_id': organizationInform['organization_id']};
+            navigate("/space", {state})
+        })
+    }
 
     const handleSearch = (event) => {
-        // const organization_input = event.target.value;
-        // console.log(organization_input);
-        // setOrganization(organization_input);
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
     const handleCreate = (event) => {
-        // const organization_input = event.target.value;
-        // console.log(organization_input);
-        // setOrganization(organization_input);
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
     const handleIsFound = () => {
-        // existsOrganizationByName(organization).then((exists) => {
-        //     setIsFound(exists);
-        // });
+        protoExistsOrganizationByName(organization).then((exists) => {
+            setIsFound(exists);
+        })
     }
 
     return (
@@ -139,7 +136,7 @@ const LandingPage = () => {
 
                     <Button
                         style={{ width: "100%", height: "3.125rem" }}
-                        onClick={() => { navigate("/space") }}
+                        onClick={onClick}
                         radius="lg"
                         variant="light"
                         color="indigo"

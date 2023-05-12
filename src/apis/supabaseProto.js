@@ -9,6 +9,22 @@ export const protoFindOrganizationByName = async (name) => {
     return data[0];
 };
 
+export const protoExistsOrganizationByName = async (name) => {
+    const {data, error} = await supabase
+        .from('proto_organization')
+        .select('*')
+        .eq('name', name);
+
+    if (error) {
+        return false;
+    } else {
+        if (data[0] === undefined) {
+            return false;
+        }
+        return true;
+    }
+};
+
 export const protoCreateOrganization = async (name) => {
     const {data, error} = await supabase
         .from('proto_organization')
