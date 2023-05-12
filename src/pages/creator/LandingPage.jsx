@@ -40,7 +40,6 @@ const LandingPage = () => {
 
         await protoFindOrganizationByName(organization).then((organizationInform) => {
             console.log(organizationInform);
-            alert(organizationInform);
             const state = {'organization_id': organizationInform['organization_id']};
             navigate("/space", {state})
         })
