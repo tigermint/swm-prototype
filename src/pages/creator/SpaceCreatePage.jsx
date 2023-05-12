@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `
 
 const SpaceCreatePage = () => {
@@ -44,7 +44,7 @@ const SpaceCreatePage = () => {
     <MainLayout>
       <Wrapper>
         <Flex
-          style={{ width: "20rem" }}
+          style={{ width: "20rem", marginTop: "2rem" }}
           mih={50}
           direction={"column"}
           gap={"2.5rem"}
@@ -96,9 +96,9 @@ const SpaceCreatePage = () => {
           >
             <WeekPicker week={space.available_day} />
           </Input.Wrapper>
-          <Button style={{ width: "100%", margin: "5rem 0 0 0 " }} size='lg' radius="md" variant="light"
-            color="indigo" onClick={handleSpaceData}>공간 생성하기</Button>
         </Flex>
+        <Button style={{ width: "20rem", marginBottom: "4rem" }} size='lg' radius="md" variant="light"
+          color="indigo" onClick={handleSpaceData}>공간 생성하기</Button>
       </Wrapper>
     </MainLayout >
   );

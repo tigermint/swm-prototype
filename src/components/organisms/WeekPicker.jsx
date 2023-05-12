@@ -25,7 +25,7 @@ const WeekPicker = ({ week }) => {
     })
 
     return (
-        <Flex style={{ marginTop: "0.2rem" }} justify={"space-between"} >
+        <Flex style={{ marginTop: "0.5rem" }} justify={"space-between"} >
             {weekButtons}
         </Flex >
     )
