@@ -1,23 +1,21 @@
 import { styled } from 'styled-components';
 import Header from '../../components/organisms/Header';
-import { Center, Text, Flex } from '@mantine/core';
+import { Text, Flex } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 //component
 import { GoogleButton } from '../../components/atoms/SocialButton/index';
 //apis
-import { GoogleLogin } from "@react-oauth/google";
-import {googleLogin} from "../../apis/supabaseAuth";
+import { googleLogin } from "../../apis/supabaseAuth";
 
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 9rem);
+  height: calc(100vh - 8.3rem);
   display: flex;
   justify-content: center;
 `
 
-const LandingPage = () => {
-
+const Test1Page = () => {
   //hooks
   const navigate = useNavigate();
 
@@ -38,11 +36,11 @@ const LandingPage = () => {
           direction="column"
           wrap="wrap"
         >
-          <Text size={"1.6em"} weight={"bolder"} >공간 예약하러 가기</Text>
-          <GoogleButton onClick={onClick} children={"Continue with Google"} />
+          <Text size={"1.6em"} weight={"bolder"} >생성자 모드입니다.</Text>
+          {/* <GoogleButton onClick={onClick} children={"Continue with Google"} /> */}
         </Flex>
       </Wrapper>
     </>
   );
 };
-export default LandingPage;
+export default Test1Page;

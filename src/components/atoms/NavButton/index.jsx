@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-
+import React from "react";
 
 const Wrapper = styled.div`
     display: flex;
@@ -27,4 +27,4 @@ const NavButton = ({ icon, text, color, onClick }) => {
         </Wrapper>
     )
 }
-export default NavButton;
+export default React.memo(NavButton);

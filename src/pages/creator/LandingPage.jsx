@@ -1,8 +1,8 @@
-import {styled} from 'styled-components';
+import { styled } from 'styled-components';
 import Header from '../../components/organisms/Header';
-import {Center, Input, Flex, Text, Button, Container} from '@mantine/core';
-import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { Center, Input, Flex, Text, Button } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 //apis
 import {
     createOrganization,
@@ -10,7 +10,7 @@ import {
     findOrganizationByName,
     joinToOrganization
 } from "../../apis/supabaseOrganization";
-import {getMyUserInform} from "../../apis/supabaseAuth";
+import { getMyUserInform } from "../../apis/supabaseAuth";
 
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `
 
 
-const OrganizationPage = () => {
+const LandingPage = () => {
 
     //hooks
     const navigate = useNavigate();
@@ -29,47 +29,47 @@ const OrganizationPage = () => {
     const [organization, setOrganization] = useState("");
     const [isFound, setIsFound] = useState(false);
 
-    //custom method
-    const onClick = () => {
-        console.log("click");
+    // //custom method
+    // const onClick = () => {
+    //     console.log("click");
 
-        existsOrganizationByName(organization).then(async (exists) => {
-            const user = await getMyUserInform();
-            let role = 'user';
+    //     existsOrganizationByName(organization).then(async (exists) => {
+    //         const user = await getMyUserInform();
+    //         let role = 'user';
 
-            if (!exists) {
-                await createOrganization(user['user_id'], organization);
-                role = 'creator';
-            }
+    //         if (!exists) {
+    //             await createOrganization(user['user_id'], organization);
+    //             role = 'creator';
+    //         }
 
-            findOrganizationByName(organization).then(async (organization_inform) => {
-                await joinToOrganization(user['user_id'], organization_inform['organization_id'], role);
-                navigate("/space");
-            });
-        })
-    }
+    //         findOrganizationByName(organization).then(async (organization_inform) => {
+    //             await joinToOrganization(user['user_id'], organization_inform['organization_id'], role);
+    //             navigate("/space");
+    //         });
+    //     })
+    // }
 
     const handleSearch = (event) => {
-        const organization_input = event.target.value;
-        console.log(organization_input);
-        setOrganization(organization_input);
+        // const organization_input = event.target.value;
+        // console.log(organization_input);
+        // setOrganization(organization_input);
     }
 
     const handleCreate = (event) => {
-        const organization_input = event.target.value;
-        console.log(organization_input);
-        setOrganization(organization_input);
+        // const organization_input = event.target.value;
+        // console.log(organization_input);
+        // setOrganization(organization_input);
     }
 
     const handleIsFound = () => {
-        existsOrganizationByName(organization).then((exists) => {
-            setIsFound(exists);
-        });
+        // existsOrganizationByName(organization).then((exists) => {
+        //     setIsFound(exists);
+        // });
     }
 
     return (
         <>
-            <Header/>
+            <Header />
             <Wrapper>
                 <Flex
                     mih={50}
@@ -79,28 +79,21 @@ const OrganizationPage = () => {
                     direction="column"
                     wrap="wrap"
                 >
-                    <Container style={{width: "18rem"}}>
-                        <Center>
-                            <Flex
-                                direction="column"
-                                align={"center"}
-                            >
-                                <Text size={"1.6em"} weight={"bolder"}>안녕하세요,</Text>
-                                <Text size={"1.6em"} weight={"bolder"}>{name} 님!</Text>
-                            </Flex>
-                        </Center>
-                    </Container>
+                    <Center
+                        style={{ marginBottom: "2rem" }}
+                    >
+                        <Text size={"1.6em"} weight={"bolder"}>생성자 모드입니다.</Text>
+                    </Center>
 
                     {/* 조직 검색 */}
                     <Input.Wrapper
-                        style={{width: "100%"}}
                         id="input-demo"
                         withAsterisk
-                        label="조직 검색"
+                        label="조직 검색(Organization)"
                         size="md"
                         error={
                             isFound ?
-                                <div style={{color: "#00A300"}}>
+                                <div style={{ color: "#00A300" }}>
                                     조직을 찾았습니다!
                                 </div>
                                 :
@@ -113,24 +106,22 @@ const OrganizationPage = () => {
                             justify={"space-between"}
                         >
                             <Input
-                                style={{width: "70%"}}
+                                style={{ width: "70%" }}
                                 id='input-demo'
                                 placeholder="조직을 검색해주세요"
                                 size='lg'
                                 radius='lg'
                                 onChange={handleSearch}
                             />
-
                             <Button size='lg' radius="lg" variant="light"
-                                    color="indigo" onClick={handleIsFound}>검색</Button>
+                                color="indigo" onClick={handleIsFound}>검색</Button>
                         </Flex>
-
                     </Input.Wrapper>
 
 
                     {/* 조직 생성 */}
                     <Input.Wrapper
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                         id="input-demo"
                         withAsterisk
                         label="조직 생성"
@@ -145,9 +136,10 @@ const OrganizationPage = () => {
                             onChange={handleCreate}
                         />
                     </Input.Wrapper>
+
                     <Button
-                        style={{width: "100%", height: "3.125rem"}}
-                        onClick={onClick}
+                        style={{ width: "100%", height: "3.125rem" }}
+                        onClick={() => { navigate("/space") }}
                         radius="lg"
                         variant="light"
                         color="indigo"
@@ -156,8 +148,8 @@ const OrganizationPage = () => {
                         입장하기
                     </Button>
                 </Flex>
-            </Wrapper>
+            </Wrapper >
         </>
     );
 };
-export default OrganizationPage;
+export default LandingPage;
