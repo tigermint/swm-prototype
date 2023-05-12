@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/MainLayout';
 import WeekPicker from '../../components/organisms/WeekPicker';
 import { useEffect, useState } from 'react';
+import {protoCreateSpaceDetail} from "../../apis/supabaseProto";
 
 //styled-components
 const Wrapper = styled.div`
@@ -24,16 +25,29 @@ const SpaceCreatePage = () => {
     start_time: "",
     end_time: "",
     capacity: "",
-    available_day: [false, false, false, false, false, false, false],
+    available_day: [false, false, false, false, false, false, false],  //TODO 요일선택 외 다른값 입력시 요일이 초기화됨
   });
 
 
   const navigate = useNavigate();
 
   const handleSpaceData = () => {
-    //TODO: space data를 받아서 supabase에 저장하는 로직
+    //space data를 받아서 supabase에 저장하는 로직
     console.log(space);
-    navigate("/space");
+    protoCreateSpaceDetail(
+        1,  //TODO 이전페이지로부터 Organization_Id를 가져오거나 기억해야함
+        space.name,
+        space.capacity,
+        space.start_time,
+        space.end_time,
+        space.available_day[0],
+        space.available_day[1],
+        space.available_day[2],
+        space.available_day[3],
+        space.available_day[4],
+        space.available_day[5],
+        space.available_day[6]
+    ).then(r => navigate("/space"));  // alert 줘야되나?
   }
 
   useEffect(() => {
