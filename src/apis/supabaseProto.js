@@ -21,22 +21,38 @@ export const protoCreateSpace = async (organization_id, space_name) => {
         .insert({"organization_id": organization_id, "name": space_name})
 };
 
-export const protoCreateSpaceDetail = async (organization_id, space_name) => {
+/**
+ * 공간에 대한 정보를 입력하여 신규 등록합니다.
+ * @param organization_id int
+ * @param space_name string
+ * @param capacity int
+ * @param start_time "HH:MM"
+ * @param end_time "HH:MM"
+ * @param sun bool
+ * @param mon bool
+ * @param tue bool
+ * @param wen bool
+ * @param thu bool
+ * @param fri bool
+ * @param sat bool
+ * @returns {Promise<void>}
+ */
+export const protoCreateSpaceDetail = async (organization_id, space_name, capacity, start_time, end_time, sun, mon, tue, wen, thu, fri, sat) => {
     const {data, error} = await supabase
         .from('proto_space')
         .insert({
             "organization_id": organization_id,
             "name": space_name,
-            "capacity": 100,
-            "start_time": "00:00",
-            "end_time": "23:59",
-            "day_sun": true,
-            "day_mon": true,
-            "day_tue": true,
-            "day_wen": true,
-            "day_thu": true,
-            "day_fri": true,
-            "day_sat": true
+            "capacity": capacity,
+            "start_time": start_time,
+            "end_time": end_time,
+            "day_sun": sun,
+            "day_mon": mon,
+            "day_tue": tue,
+            "day_wen": wen,
+            "day_thu": thu,
+            "day_fri": fri,
+            "day_sat": sat
         })
 };
 
@@ -112,6 +128,7 @@ export const protoFindAllReservationByOrganizationIdAndReservationId = async (or
             'space_id.organization_id': organization_id,
             'reservation_date': reservation_date
         })
+    //TODO 생성자 입장에서 전체 조회가 이상하게됨. (DB입장에서 이상하게 반환해서 필터링 한번 더 거쳐야함)
 
     return data;
 };
