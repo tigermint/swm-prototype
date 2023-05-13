@@ -6,26 +6,6 @@ import {protoFindAllSpaceByOrganizationId} from "../../apis/supabaseProto";
 import {useEffect, useState} from "react";
 import {getAuth} from "../../apis/supabaseAuth";
 
-
-// const spaces = [
-//   {
-//     name: 'Space 1',
-//     day: 'Monday',
-//     startTime: '09:00 AM',
-//     endTime: '05:00 PM',
-//     capacity: 10,
-//   },
-//   {
-//     name: 'Space 2',
-//     day: 'Tuesday',
-//     startTime: '10:00 AM',
-//     endTime: '06:00 PM',
-//     capacity: 8,
-//   },
-//   // Add more space objects as needed
-// ];
-
-
 const SpacePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
