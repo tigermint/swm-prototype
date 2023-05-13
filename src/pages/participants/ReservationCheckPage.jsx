@@ -1,6 +1,12 @@
 import MainLayout from "../../components/MainLayout"
 import {styled} from 'styled-components';
 import {Center, Input, Flex, Text, Button} from '@mantine/core';
+import {useState} from "react";
+import {
+    protoCreateOrganization,
+    protoExistsReservationByNameAndEmail, protoFindAllReservationByNameAndEmail,
+    protoFindOrganizationByName
+} from "../../apis/supabaseProto";
 
 //styled-components
 const Wrapper = styled.div`
@@ -13,7 +19,38 @@ const Wrapper = styled.div`
 `
 
 const ReservationCheckPage = () => {
-    
+
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [isNotFound, setIsNotFound] = useState(false);
+
+    const onClick = async () => {
+        console.log("click");
+
+        protoExistsReservationByNameAndEmail(userName, userEmail).then((exists) => {
+            if (!exists) {
+                console.error("예약내역이 없습니다");
+                setIsNotFound(true);
+            } else {
+               protoFindAllReservationByNameAndEmail(userName, userEmail).then((reservations) => {
+                   console.log(reservations);
+                   console.log("예약내역 페이지로 이동하는 로직을 넣을 것!");
+               })
+            }
+        });
+    }
+
+    const handleUserName = (event) => {
+        const userName_input = event.target.value;
+        console.log("예약자: " + userName_input);
+        setUserName(userName_input);
+    }
+
+    const handleUserEmail = (event) => {
+        const userEmail_input = event.target.value;
+        console.log("이메일: " + userEmail_input);
+        setUserEmail(userEmail_input);
+    }
 
     // xml
     return (
@@ -40,15 +77,6 @@ const ReservationCheckPage = () => {
                         withAsterisk
                         label="예약자명"
                         size="md"
-                         /* error={
-                            isFound ?
-                                <div style={{color: "#00A300"}}>
-                                </div>
-                                :
-                                <div>
-                                    일치하는 이름이 없습니다.
-                                </div>
-                        } */
                     >
                         <Flex
                             justify={"space-between"}
@@ -59,7 +87,7 @@ const ReservationCheckPage = () => {
                                 placeholder="이름을 입력해주세요"
                                 size='lg'
                                 radius='lg'
-                                // onChange={handleSearch}
+                                onChange={handleUserName}
                             />
                         </Flex>
                     </Input.Wrapper>
@@ -73,19 +101,28 @@ const ReservationCheckPage = () => {
                         label="이메일"
                         size="md"
                         // description="조직이 없다면, 조직을 생성해주세요"
+                        error={
+                            !isNotFound ?
+                                <div style={{color: "#00A300"}}>
+                                </div>
+                                :
+                                <div>
+                                    예약내역이 없습니다.
+                                </div>
+                        }
                     >
                         <Input
                             id='input-reserved-email'
                             placeholder="이메일을 입력해주세요"
                             size='lg'
                             radius='lg'
-                            // onChange={handleCreate}
+                            onChange={handleUserEmail}
                         />
                     </Input.Wrapper>
 
                     <Button
                         style={{width: "100%", height: "3.125rem"}}
-                        // onClick={onClick}
+                        onClick={onClick}
                         radius="lg"
                         variant="light"
                         color="indigo"
