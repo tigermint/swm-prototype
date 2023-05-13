@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 //apis
 import {
-    protoCreateOrganization,
+    protoCreateOrganization, protoExistsSpaceByOrganizationId,
     protoExistsOrganizationByName,
     protoFindOrganizationByName
 } from "../../apis/supabaseProto";
@@ -38,10 +38,17 @@ const LandingPage = () => {
             await protoCreateOrganization(organization);
         }
 
-        await protoFindOrganizationByName(organization).then((organizationInform) => {
+        await protoFindOrganizationByName(organization).then(async (organizationInform) => {
             console.log(organizationInform);
-            const state = {'organization_id': organizationInform['organization_id']};
-            navigate("/space", {state})
+
+            await protoExistsSpaceByOrganizationId(organizationInform['organization_id']).then((exists) => {  // 첫 접속인 경우 Space 생성페이지로 바로 이동
+               const state = {'organization_id': organizationInform['organization_id']};
+               if (exists) {
+                   navigate("/space", {state});
+               } else {
+                   navigate("/create", {state});
+               }
+            });
         })
     }
 

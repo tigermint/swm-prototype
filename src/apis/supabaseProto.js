@@ -18,10 +18,7 @@ export const protoExistsOrganizationByName = async (name) => {
     if (error) {
         return false;
     } else {
-        if (data[0] === undefined) {
-            return false;
-        }
-        return true;
+        return data[0] !== undefined;
     }
 };
 
@@ -70,6 +67,19 @@ export const protoCreateSpaceDetail = async (organization_id, space_name, capaci
             "day_fri": fri,
             "day_sat": sat
         })
+};
+
+export const protoExistsSpaceByOrganizationId = async (organization_id) => {
+    const {data, error} = await supabase
+        .from('proto_space')
+        .select('*')
+        .eq('organization_id', organization_id);
+
+    if (error) {
+        return false;
+    } else {
+        return data[0] !== undefined;
+    }
 };
 
 export const protoFindAllSpaceByOrganizationId = async (organization_id) => {

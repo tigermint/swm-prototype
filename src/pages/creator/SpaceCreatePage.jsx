@@ -1,7 +1,7 @@
 import { Input, Button, Flex } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import { styled } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 //components
 import MainLayout from '../../components/MainLayout';
@@ -29,13 +29,15 @@ const SpaceCreatePage = () => {
   });
 
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const location = useLocation();
+  const [organization_id, setOrganization_id] = useState(0);
 
   const handleSpaceData = () => {
     //space data를 받아서 supabase에 저장하는 로직
     console.log(space);
     protoCreateSpaceDetail(
-        1,  //TODO 이전페이지로부터 Organization_Id를 가져오거나 기억해야함
+        organization_id,  //TODO 이전페이지로부터 Organization_Id를 가져오거나 기억해야함
         space.name,
         space.capacity,
         space.start_time,
@@ -47,7 +49,11 @@ const SpaceCreatePage = () => {
         space.available_day[4],
         space.available_day[5],
         space.available_day[6]
-    ).then(r => navigate("/space"));  // alert 줘야되나?
+    ).then(r => {
+      const state = {'organization_id': organization_id};
+      alert("[" + space.name + " 공간 생성 완료!]");
+      navigate("/space", {state});
+    });  // alert 줘야되나?
   }
 
   const handleWeekChange = useCallback((newWeek) => {
@@ -59,6 +65,15 @@ const SpaceCreatePage = () => {
 
   useEffect(() => {
     console.log(space);
+    const {organization_id = 0} = location.state || {};
+    if (organization_id === 0) {
+      console.error("올바르지 않은 SpaceCreate 페이지 접근입니다. 조직 찾기 페이지에서 시작해주세요.");
+      alert("올바르지 않은 SpaceCreate 페이지 접근입니다. 조직 찾기 페이지에서 시작해주세요.");
+      navigate("/");
+    } else {
+      console.log(organization_id);
+      setOrganization_id(organization_id);
+    }
   }, [space])
 
   return (
