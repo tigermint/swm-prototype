@@ -6,7 +6,7 @@ import { TimeInput } from '@mantine/dates';
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getAuth} from "../../apis/supabaseAuth";
-import {protoFindSpaceBySpaceId} from "../../apis/supabaseProto";
+import {protoCreateReservation, protoFindSpaceBySpaceId} from "../../apis/supabaseProto";
 
 //styled-components
 const Wrapper = styled.div`
@@ -18,8 +18,17 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `
 const ReservePage = () => {
-    const [spaces, setSpaces] = useState([]);
     const params = useParams();
+    const [spaces, setSpaces] = useState([]);
+    const [reservation, setReservation] = useState({
+        space_id: params['id'],
+        date: "2023-05-14",  //TODO 날짜 값 받아오기
+        start_time: "",
+        end_time: "",
+        user_name: "",
+        user_email: "",
+        user_count: "",
+    });
 
     // url path 기준으로 회의실 정보 가져오기
     useEffect(() => {
@@ -28,6 +37,20 @@ const ReservePage = () => {
             setSpaces([space]);
         });
     }, [])
+
+    const handleReservationData = () => {
+        console.log(reservation);
+        protoCreateReservation(
+            params['id'],
+            reservation.date,
+            reservation.start_time,
+            reservation.end_time,
+            reservation.user_name,
+            reservation.user_email,
+            reservation.user_count
+        )
+        alert(spaces[0].name + " 에약이 완료되었습니다.");
+    }
 
     // xml 다 짜고 App.js 돌려놓기!
     return (
@@ -52,7 +75,7 @@ const ReservePage = () => {
                         radius="md"
                         size="md"
                         withAsterisk
-                        // onChange={(event) => { setSpace({ ...space, start_time: event.target.value }) }}
+                        onChange={(event) => { setReservation({ ...reservation, start_time: event.target.value }) }}
                     />
                     {/* 이용 종료 시간 */}
                     <TimeInput
@@ -61,7 +84,7 @@ const ReservePage = () => {
                         radius="md"
                         size="md"
                         withAsterisk
-                        //onChange={(event) => { setSpace({ ...space, end_time: event.target.value }) }}
+                        onChange={(event) => { setReservation({ ...reservation, end_time: event.target.value }) }}
                     />
 
                     
@@ -82,6 +105,7 @@ const ReservePage = () => {
                                 style={{width: "100%"}}
                                 id='input-reserve-name'
                                 placeholder="이름을 입력해주세요"
+                                onChange={(event) => { setReservation({ ...reservation, user_name: event.target.value }) }}
                                 size='lg'
                                 radius='lg' />
                         </Flex>
@@ -97,6 +121,7 @@ const ReservePage = () => {
                         <Input
                             id='input-reserved-email'
                             placeholder="이메일을 입력해주세요"
+                            onChange={(event) => { setReservation({ ...reservation, user_email: event.target.value }) }}
                             size='lg'
                             radius='lg' />
                     </Input.Wrapper>
@@ -111,6 +136,7 @@ const ReservePage = () => {
                         <Input
                             id='input-reserved-email'
                             placeholder="이용하는 인원 수를 입력해주세요"
+                            onChange={(event) => { setReservation({ ...reservation, user_count: event.target.value }) }}
                             size='lg'
                             radius='lg'/>
                     </Input.Wrapper>
@@ -134,7 +160,7 @@ const ReservePage = () => {
                     {/* 예약하기 btn */}
                     <Button
                         style={{width: "100%", height: "3.125rem"}}
-                        // onClick={onClick}
+                        onClick={handleReservationData}
                         radius="lg" 
                         variant="light"
                         color="indigo"

@@ -53,7 +53,7 @@ const SpaceCreatePage = () => {
       const state = {'organization_id': organization_id};
       alert("[" + space.name + " 공간 생성 완료!]");
       navigate("/space", {state});
-    });  // alert 줘야되나?
+    });
   }
 
   const handleWeekChange = useCallback((newWeek) => {
