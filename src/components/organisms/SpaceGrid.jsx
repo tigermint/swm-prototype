@@ -50,8 +50,6 @@ export default function SpaceGrid({onClick, spaces}) {
     }
 
     const cards = spaces.map((space, index) => (
-
-
         <Card
             key={space.name}
             p="md"
