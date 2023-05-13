@@ -134,6 +134,22 @@ export const protoCreateReservation = async (space_id, date, start_time, end_tim
         })
 };
 
+export const protoExistsReservationByNameAndEmail = async (name, email) => {
+    const {data, error} = await supabase
+        .from('proto_reservation')
+        .select('*, space_id(space_id, name)')
+        .match({
+            "user_name": name,
+            "user_email": email
+        })
+
+    if (error) {
+        return false;
+    } else {
+        return data[0] !== undefined;
+    }
+};
+
 export const protoFindAllReservationByNameAndEmail = async (name, email) => {
     const {data, error} = await supabase
         .from('proto_reservation')
