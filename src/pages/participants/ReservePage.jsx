@@ -3,6 +3,10 @@ import SpaceGrid from "../../components/organisms/SpaceGrid"
 import {styled} from 'styled-components';
 import {Input, Flex, Button, Center, Text} from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getAuth} from "../../apis/supabaseAuth";
+import {protoFindSpaceBySpaceId} from "../../apis/supabaseProto";
 
 //styled-components
 const Wrapper = styled.div`
@@ -14,16 +18,16 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `
 const ReservePage = () => {
-    const spaces = [ // mock data (아직 연결x 상태)
-    {
-        name: 'Space 1',
-        day: 'Monday',
-        start_time: '09:00 AM',
-        end_time: '05:00 PM',
-        capacity: 10,
-    }
-    ];
+    const [spaces, setSpaces] = useState([]);
+    const params = useParams();
 
+    // url path 기준으로 회의실 정보 가져오기
+    useEffect(() => {
+        protoFindSpaceBySpaceId(params['id']).then((space) => {
+            console.log(space);
+            setSpaces([space]);
+        });
+    }, [])
 
     // xml 다 짜고 App.js 돌려놓기!
     return (
