@@ -1,16 +1,15 @@
-import { styled } from 'styled-components';
+import {styled} from 'styled-components';
 import Header from '../../components/organisms/Header';
-import { Center, Input, Flex, Text, Button } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import {Center, Input, Flex, Text, Button} from '@mantine/core';
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 //apis
 import {
-    createOrganization,
-    existsOrganizationByName,
-    findOrganizationByName,
-    joinToOrganization
-} from "../../apis/supabaseOrganization";
-import { getMyUserInform } from "../../apis/supabaseAuth";
+    protoCreateOrganization,
+    protoExistsOrganizationByName,
+    protoFindOrganizationByName
+} from "../../apis/supabaseProto";
+import {existsOrganizationByName} from "../../apis/supabaseOrganization";
 
 
 const Wrapper = styled.div`
@@ -29,47 +28,44 @@ const LandingPage = () => {
     const [organization, setOrganization] = useState("");
     const [isFound, setIsFound] = useState(false);
 
-    // //custom method
-    // const onClick = () => {
-    //     console.log("click");
+    //custom method
+    const onClick = async () => {
+        console.log("click");
+        await handleIsFound();
 
-    //     existsOrganizationByName(organization).then(async (exists) => {
-    //         const user = await getMyUserInform();
-    //         let role = 'user';
+        if (isFound) {
+        } else {
+            await protoCreateOrganization(organization);
+        }
 
-    //         if (!exists) {
-    //             await createOrganization(user['user_id'], organization);
-    //             role = 'creator';
-    //         }
-
-    //         findOrganizationByName(organization).then(async (organization_inform) => {
-    //             await joinToOrganization(user['user_id'], organization_inform['organization_id'], role);
-    //             navigate("/space");
-    //         });
-    //     })
-    // }
+        await protoFindOrganizationByName(organization).then((organizationInform) => {
+            console.log(organizationInform);
+            const state = {'organization_id': organizationInform['organization_id']};
+            navigate("/space", {state})
+        })
+    }
 
     const handleSearch = (event) => {
-        // const organization_input = event.target.value;
-        // console.log(organization_input);
-        // setOrganization(organization_input);
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
     const handleCreate = (event) => {
-        // const organization_input = event.target.value;
-        // console.log(organization_input);
-        // setOrganization(organization_input);
+        const organization_input = event.target.value;
+        console.log(organization_input);
+        setOrganization(organization_input);
     }
 
     const handleIsFound = () => {
-        // existsOrganizationByName(organization).then((exists) => {
-        //     setIsFound(exists);
-        // });
+        protoExistsOrganizationByName(organization).then((exists) => {
+            setIsFound(exists);
+        })
     }
 
     return (
         <>
-            <Header />
+            <Header/>
             <Wrapper>
                 <Flex
                     mih={50}
@@ -80,7 +76,7 @@ const LandingPage = () => {
                     wrap="wrap"
                 >
                     <Center
-                        style={{ marginBottom: "2rem" }}
+                        style={{marginBottom: "2rem"}}
                     >
                         <Text size={"1.6em"} weight={"bolder"}>생성자 모드입니다.</Text>
                     </Center>
@@ -93,7 +89,7 @@ const LandingPage = () => {
                         size="md"
                         error={
                             isFound ?
-                                <div style={{ color: "#00A300" }}>
+                                <div style={{color: "#00A300"}}>
                                     조직을 찾았습니다!
                                 </div>
                                 :
@@ -106,7 +102,7 @@ const LandingPage = () => {
                             justify={"space-between"}
                         >
                             <Input
-                                style={{ width: "70%" }}
+                                style={{width: "70%"}}
                                 id='input-demo'
                                 placeholder="조직을 검색해주세요"
                                 size='lg'
@@ -114,14 +110,14 @@ const LandingPage = () => {
                                 onChange={handleSearch}
                             />
                             <Button size='lg' radius="lg" variant="light"
-                                color="indigo" onClick={handleIsFound}>검색</Button>
+                                    color="indigo" onClick={handleIsFound}>검색</Button>
                         </Flex>
                     </Input.Wrapper>
 
 
                     {/* 조직 생성 */}
                     <Input.Wrapper
-                        style={{ width: "100%" }}
+                        style={{width: "100%"}}
                         id="input-demo"
                         withAsterisk
                         label="조직 생성"
@@ -138,8 +134,8 @@ const LandingPage = () => {
                     </Input.Wrapper>
 
                     <Button
-                        style={{ width: "100%", height: "3.125rem" }}
-                        onClick={() => { navigate("/space") }}
+                        style={{width: "100%", height: "3.125rem"}}
+                        onClick={onClick}
                         radius="lg"
                         variant="light"
                         color="indigo"
@@ -148,7 +144,7 @@ const LandingPage = () => {
                         입장하기
                     </Button>
                 </Flex>
-            </Wrapper >
+            </Wrapper>
         </>
     );
 };

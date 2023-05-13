@@ -1,4 +1,4 @@
-import { createStyles, SimpleGrid, Card, Text, Container, Button, Flex } from '@mantine/core';
+import {createStyles, SimpleGrid, Card, Text, Container, Button, Flex} from '@mantine/core';
 import data from '../../assets/mockdata';
 import React from 'react';
 
@@ -34,10 +34,24 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
-export default function SpaceGrid({ onClick }) {
-    const { classes } = useStyles();
+export default function SpaceGrid({onClick, spaces}) {
+    const {classes} = useStyles();
 
-    const cards = data.map((space, index) => (
+    const days = (sun, mon, tue, wen, thu, fri, sat) => {
+        let str = "";
+        if (mon) str += "월";
+        if (tue) str += "화";
+        if (wen) str += "수";
+        if (thu) str += "목";
+        if (fri) str += "금";
+        if (sat) str += "토";
+        if (sun) str += "일";
+        return str;
+    }
+
+    const cards = spaces.map((space, index) => (
+
+
         <Card
             key={space.name}
             p="md"
@@ -51,18 +65,27 @@ export default function SpaceGrid({ onClick }) {
                 >
                     {space.name}
                 </Text>
-                <Button onClick={() => { }} variant="light" color="indigo" radius="md" size="md" compact>링크 복사</Button>
+                <Button onClick={() => {
+                }} variant="light" color="indigo" radius="md" size="md" compact>링크 복사</Button>
             </Flex>
             <Text className={classes.day}>
-                이용 가능 요일: {space.day}
+                이용 가능 요일: {days(
+                space.day_mon,
+                space.day_tue,
+                space.day_wen,
+                space.day_thu,
+                space.day_fri,
+                space.day_sat,
+                space.day_sun
+            )}
             </Text>
             <Text className={classes.time}>
-                이용 가능 시간: {space.startTime} ~ {space.endTime}
+                이용 가능 시간: {space.start_time.substring(0, 5)} ~ {space.end_time.substring(0, 5)}
             </Text>
             <Text className={classes.capacity}>
                 최대 수용 인원: {space.capacity} 명
             </Text>
-        </Card >
+        </Card>
     ));
 
     return (
@@ -70,7 +93,7 @@ export default function SpaceGrid({ onClick }) {
             <SimpleGrid cols={1}>
                 {cards}
             </SimpleGrid>
-        </Container >
+        </Container>
     );
 }
 

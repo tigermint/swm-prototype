@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 //components
 import MainLayout from '../../components/MainLayout';
 import WeekPicker from '../../components/organisms/WeekPicker';
-import { useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {protoCreateSpaceDetail} from "../../apis/supabaseProto";
 
 //styled-components
 const Wrapper = styled.div`
@@ -31,10 +32,30 @@ const SpaceCreatePage = () => {
   const navigate = useNavigate();
 
   const handleSpaceData = () => {
-    //TODO: space data를 받아서 supabase에 저장하는 로직
+    //space data를 받아서 supabase에 저장하는 로직
     console.log(space);
-    navigate("/space");
+    protoCreateSpaceDetail(
+        1,  //TODO 이전페이지로부터 Organization_Id를 가져오거나 기억해야함
+        space.name,
+        space.capacity,
+        space.start_time,
+        space.end_time,
+        space.available_day[0],
+        space.available_day[1],
+        space.available_day[2],
+        space.available_day[3],
+        space.available_day[4],
+        space.available_day[5],
+        space.available_day[6]
+    ).then(r => navigate("/space"));  // alert 줘야되나?
   }
+
+  const handleWeekChange = useCallback((newWeek) => {
+    setSpace((prevSpace) => ({
+      ...prevSpace,
+      available_day: newWeek,
+    }));
+  }, []);
 
   useEffect(() => {
     console.log(space);
@@ -94,7 +115,9 @@ const SpaceCreatePage = () => {
             label="이용 가능 요일"
             size="md"
           >
-            <WeekPicker week={space.available_day} />
+            {/*<WeekPicker week={space.available_day} />*/}
+            <WeekPicker week={space.available_day} onChange={handleWeekChange} />
+            {/*<WeekPicker onChange={handleWeekChange} />*/}
           </Input.Wrapper>
         </Flex>
         <Button style={{ width: "20rem", marginBottom: "4rem" }} size='lg' radius="md" variant="light"
