@@ -1,5 +1,5 @@
 import { createStyles, SimpleGrid, Card, Text, Container, Button, Flex } from '@mantine/core';
-import data from '../../assets/mockdata';
+import data from "../../assets/spaceMockData"
 import React from 'react';
 
 const useStyles = createStyles((theme) => ({

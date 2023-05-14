@@ -87,7 +87,6 @@ const LandingPage = () => {
 
                     {/* 조직 검색 */}
                     <Input.Wrapper
-                        id="input-demo"
                         withAsterisk
                         label="조직 검색(Organization)"
                         size="md"
@@ -107,7 +106,6 @@ const LandingPage = () => {
                         >
                             <Input
                                 style={{ width: "70%" }}
-                                id='input-demo'
                                 placeholder="조직을 검색해주세요"
                                 size='lg'
                                 radius='lg'
@@ -122,14 +120,12 @@ const LandingPage = () => {
                     {/* 조직 생성 */}
                     <Input.Wrapper
                         style={{ width: "100%" }}
-                        id="input-demo"
                         withAsterisk
                         label="조직 생성"
                         size="md"
                         description="조직이 없다면, 조직을 생성해주세요"
                     >
                         <Input
-                            id='input-demo'
                             placeholder="조직을 생성해주세요"
                             size='lg'
                             radius='lg'
